@@ -20,7 +20,7 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build Docker image
-      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/paperless-sane-consumer:latest -f Dockerfile .
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/paperless-sane-consumer:${TAG} -f Dockerfile .
 
     - name: Push Docker image to Docker Hub
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/paperless-sane-consumer:latest
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/paperless-sane-consumer:${TAG}
