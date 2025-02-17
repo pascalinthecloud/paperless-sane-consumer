@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+ paperless-sane-consumer:
+    image: pascaaal/paperless-sane-consume:v1.0.0
+    container_name: paperless-sane-consumer
+    environment:
+      - PAPERLESS_API_URL=https://your-paperless-instance.dev/api/documents/post_document/
+      - PAPERLESS_API_TOKEN=YOUR_API_TOKEN
+      - DEVICE=net:172.17.0.1:pfufs:fi-7160:003:003
+      - SANE_IP=10.0.20.1
+      # - DEBUG=true
+    ports: # Exposing prometheus metrics
+      - 8001:8000
+    restart: unless-stopped
