@@ -13,3 +13,8 @@ services:
     ports: # Exposing prometheus metrics
       - 8001:8000
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
