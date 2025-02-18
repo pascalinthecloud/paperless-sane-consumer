@@ -3,6 +3,7 @@ import time
 import subprocess
 import requests
 import logging
+import threading
 from prometheus_client import start_http_server, Counter, Gauge
 from flask import Flask
 
@@ -129,10 +130,19 @@ def upload_scanned_files(file_path: str) -> None:
         logger.error(f"Failed to upload {file_path}: {e}")
 
 
+def run_flask():
+    """Run the Flask app."""
+    import logging
+    log = logging.getLogger('werkzeug')
+    log.setLevel(logging.ERROR)
+    app.run(port=5000)
+
 def main() -> None:
     """Main function to start the Prometheus server and run scans periodically."""
     start_http_server(8000)
-    app.run(port=5000)  # Start Flask server for health endpoint
+    flask_thread = threading.Thread(target=run_flask)
+    flask_thread.daemon = True
+    flask_thread.start()
     while True:
         run_scan()
         time.sleep(15)
