@@ -38,8 +38,8 @@ You can use Docker Compose to run the container. Create a `docker-compose.yaml` 
 version: '3.8'
 
 services:
-  paperless-sane-consumer:
-    image: pascaaal/paperless-sane-consumer:v1.0.0
+ paperless-sane-consumer:
+    image: pascaaal/paperless-sane-consume:v1.0.0
     container_name: paperless-sane-consumer
     environment:
       - PAPERLESS_API_URL=https://your-paperless-instance.dev/api/documents/post_document/
@@ -50,6 +50,11 @@ services:
     ports: # Exposing prometheus metrics
       - 8001:8000
     restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q","--spider", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 ```
 
 Run the Docker Compose setup:
