@@ -4,7 +4,7 @@ import subprocess
 import requests
 import logging
 from prometheus_client import start_http_server, Counter, Gauge
-
+from flask import Flask
 
 # Paperless NGX API settings
 PAPERLESS_API_URL = os.getenv("PAPERLESS_API_URL")
@@ -35,6 +35,12 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger()
+
+app = Flask(__name__)
+
+@app.route('/health')
+def health():
+    return "OK", 200
 
 
 def validate_env_vars() -> bool:
@@ -126,6 +132,7 @@ def upload_scanned_files(file_path: str) -> None:
 def main() -> None:
     """Main function to start the Prometheus server and run scans periodically."""
     start_http_server(8000)
+    app.run(port=5000)  # Start Flask server for health endpoint
     while True:
         run_scan()
         time.sleep(15)
