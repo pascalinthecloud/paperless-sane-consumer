@@ -135,7 +135,7 @@ def run_flask():
     import logging
     log = logging.getLogger('werkzeug')
     log.setLevel(logging.ERROR)
-    app.run(port=5000)
+    app.run(host="0.0.0.0", port=5000)
 
 def main() -> None:
     """Main function to start the Prometheus server and run scans periodically."""
