@@ -27,6 +27,8 @@ COPY paperless-sane-consumer.py /app/paperless-sane-consumer.py
 RUN useradd -m -s /bin/bash sane-consumer
 # Set the permissions for the SANE configuration files
 RUN chown -R sane-consumer:sane-consumer /etc/sane.d/
+# Set the permissions for the /app directory
+RUN chown -R sane-consumer:sane-consumer /app
 
 # Verify SANE installation
 RUN scanimage -L || true
