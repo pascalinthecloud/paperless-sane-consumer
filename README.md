@@ -39,7 +39,7 @@ version: '3.8'
 
 services:
  paperless-sane-consumer:
-    image: pascaaal/paperless-sane-consume:v1.1.0
+    image: pascaaal/paperless-sane-consume:v1.1.1
     container_name: paperless-sane-consumer
     environment:
       - PAPERLESS_API_URL=https://your-paperless-instance.dev/api/documents/post_document/

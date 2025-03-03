@@ -29,7 +29,7 @@ RUN useradd -m -s /bin/bash sane-consumer
 # Verify SANE installation
 RUN scanimage -L || true
 
-USER sane-consumer
+USER 1000
 
 # Run the Python script
 ENTRYPOINT ["/entrypoint.sh"]
