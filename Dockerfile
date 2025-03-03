@@ -23,8 +23,13 @@ RUN chmod +x /entrypoint.sh
 # Copy the Python script
 COPY paperless-sane-consumer.py /app/paperless-sane-consumer.py
 
+# Create a non-root user and home directory
+RUN useradd -m -s /bin/bash sane-consumer
+
 # Verify SANE installation
 RUN scanimage -L || true
+
+USER sane-consumer
 
 # Run the Python script
 ENTRYPOINT ["/entrypoint.sh"]
